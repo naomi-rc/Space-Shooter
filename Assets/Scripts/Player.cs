@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {        
+    {
         transform.position = new Vector3(0, 0, 0);
         offset = new Vector3(0, 0.8f, 0);
     }
@@ -37,14 +37,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    void CalculateMovement() {
+    void CalculateMovement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-       
-        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        Debug.Log($@"X: {horizontalInput},  Y: {verticalInput}");
+
+        Vector3 direction = new Vector3(horizontalInput * 100, verticalInput, 0);
 
         transform.Translate(direction * _speed * Time.deltaTime);
-       
+
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, LOWER_BOUND, UPPER_BOUND), 0);
 
         if (transform.position.x <= LEFT_BOUND)
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(LEFT_BOUND, transform.position.y, 0);
         }
-    } 
+    }
 
     private void FireLaser()
     {
@@ -64,7 +66,7 @@ public class Player : MonoBehaviour
     }
 
     private bool FirePressed()
-    {       
+    {
         return Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire1") != 0 || Input.GetAxis("Fire2") != 0 || Input.GetAxis("Fire3") != 0;
     }
 }
