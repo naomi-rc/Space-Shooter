@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     private const float UPPER_BOUND = 0;
     private const float STARTING_HEIGHT = 6f;
     private const float LOWER_BOUND = -3.8f;
+    private const string LASER_TAG = "Laser";
+    private const string PLAYER_TAG = "Player";
 
     [SerializeField]
     private GameObject _enemyPrefab;
@@ -34,6 +36,27 @@ public class Enemy : MonoBehaviour
             float randomHorizontal = Random.Range(LEFT_BOUND, RIGHT_BOUND);
             transform.position = new Vector3(randomHorizontal, STARTING_HEIGHT, 0);
         }
+
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Hit: " + other.transform.name);
+        //if other is player, damage player and destroy this object 
+        if (other.CompareTag(PLAYER_TAG))
+        {
+            //damager player
+
+            Destroy(this.gameObject);
+        }
+        //if other is laser, destroy this object and destroy laser
+        else if (other.CompareTag(LASER_TAG))
+        {
+            Destroy(this.gameObject);
+            Destroy(other.gameObject);
+        }
+            
 
 
     }
