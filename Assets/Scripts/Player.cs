@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private int _lives = 3;
+
 
     private const float LEFT_BOUND = -11.3f;
     private const float RIGHT_BOUND = 11.3f;
@@ -41,7 +44,6 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        Debug.Log($@"X: {horizontalInput},  Y: {verticalInput}");
 
         Vector3 direction = new Vector3(horizontalInput * 100, verticalInput, 0);
 
@@ -68,5 +70,15 @@ public class Player : MonoBehaviour
     private bool FirePressed()
     {
         return Input.GetKey(KeyCode.Space) || Input.GetAxis("Fire1") != 0 || Input.GetAxis("Fire2") != 0 || Input.GetAxis("Fire3") != 0;
+    }
+
+    public void Damage()
+    {
+        _lives--;
+
+        if(_lives < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
