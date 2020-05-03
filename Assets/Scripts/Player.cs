@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
 
+    private SpawnManager _spawnManager;
+
 
     private const float LEFT_BOUND = -11.3f;
     private const float RIGHT_BOUND = 11.3f;
@@ -27,6 +29,14 @@ public class Player : MonoBehaviour
     {
         transform.position = new Vector3(0, 0, 0);
         offset = new Vector3(0, 0.8f, 0);
+
+        //Get access to spawn manager script
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+    
+        if(_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is NULL");
+        }
     }
 
     // Update is called once per frame (60 frames per second)
@@ -78,6 +88,8 @@ public class Player : MonoBehaviour
 
         if(_lives < 1)
         {
+            //tell spawnmanager player died
+            _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
     }

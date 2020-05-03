@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyContainer;
 
     private Vector3 _enemyPosition;
+    private bool _stopSpawning = false;
     
     // Start is called before the first frame update
     IEnumerator Start()
@@ -31,7 +32,7 @@ public class SpawnManager : MonoBehaviour
         //while loop
         //instantiate enemy prefab
         //yield wait for 5 seconds
-        while (true)
+        while (!_stopSpawning)
         {
             float randomHorizontal = Random.Range(Enemy.LEFT_BOUND, Enemy.RIGHT_BOUND);
             _enemyPosition = new Vector3(randomHorizontal, Enemy.STARTING_HEIGHT, 0);
@@ -40,5 +41,10 @@ public class SpawnManager : MonoBehaviour
             newEnemy.transform.SetParent(_enemyContainer.transform);
             yield return new WaitForSeconds(5);
         }
+    }
+
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
     }
 }
