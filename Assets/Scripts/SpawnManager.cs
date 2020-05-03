@@ -6,19 +6,14 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _enemyPrefab;
+    [SerializeField]
+    private GameObject _enemyContainer;
+
     private Vector3 _enemyPosition;
-
-    private const float LEFT_BOUND = -11.3f;
-    private const float RIGHT_BOUND = 11.3f;
-    private const float STARTING_HEIGHT = 6f;
-    private const float LOWER_BOUND = -3.8f;
-
-
+    
     // Start is called before the first frame update
     IEnumerator Start()
-    {
-        float randomHorizontal = Random.Range(LEFT_BOUND, RIGHT_BOUND);
-        _enemyPosition = new Vector3(randomHorizontal, STARTING_HEIGHT, 0);
+    {        
         yield return StartCoroutine(SpawnRoutine());
     }
 
@@ -38,8 +33,11 @@ public class SpawnManager : MonoBehaviour
         //yield wait for 5 seconds
         while (true)
         {
-            _enemyPosition.x = Random.Range(LEFT_BOUND, RIGHT_BOUND);
-            Instantiate(_enemyPrefab, _enemyPosition, Quaternion.identity);
+            float randomHorizontal = Random.Range(Enemy.LEFT_BOUND, Enemy.RIGHT_BOUND);
+            _enemyPosition = new Vector3(randomHorizontal, Enemy.STARTING_HEIGHT, 0);
+
+            GameObject newEnemy = Instantiate(_enemyPrefab, _enemyPosition, Quaternion.identity);
+            newEnemy.transform.SetParent(_enemyContainer.transform);
             yield return new WaitForSeconds(5);
         }
     }

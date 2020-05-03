@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private const float LEFT_BOUND = -11.3f;
-    private const float RIGHT_BOUND = 11.3f;
-    private const float STARTING_HEIGHT = 6f;
-    private const float LOWER_BOUND = -3.8f;
+    public static float LEFT_BOUND = -11.3f;
+    public static float RIGHT_BOUND = 11.3f;
+    public static float STARTING_HEIGHT = 6f;
+    public static float LOWER_BOUND = -3.8f;
     private const string LASER_TAG = "Laser";
     private const string PLAYER_TAG = "Player";
     
